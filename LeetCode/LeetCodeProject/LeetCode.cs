@@ -1,7 +1,21 @@
-﻿namespace LeetCodeProject
+﻿using System.Diagnostics;
+using System.Text;
+
+namespace LeetCodeProject
 {
     internal static class LeetCode
     {
+        #region Properties
+        private static Stopwatch Watch { get; set; }
+        #endregion
+
+        #region Ctor
+        static LeetCode()
+        {
+            Watch = new Stopwatch();
+        }
+        #endregion
+
         #region TwoSum
         //Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
         //You may assume that each input would have exactly one solution, and you may not use the same element twice.
@@ -151,6 +165,77 @@
 
             return firstStr[..commonLength];
         }
+        #endregion
+
+        #region LongestSubstringWithoutRepeatingCharacters
+
+        public static int LengthOfLongestSubstring(string s)//"abcabcbb"
+        {
+            Watch.Start();
+
+            if (string.IsNullOrEmpty(s))
+                return 0;
+
+            HashSet<int> hashset = new HashSet<int>();
+            StringBuilder temp = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+            {
+                temp.Append(s[i]);
+                for (int j = i + 1; j < s.Length; j++)
+                {
+                    if (s[i] != s[j] && !temp.ToString().Contains(s[j]))
+                    {
+                        temp.Append(s[j]);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                hashset.Add(temp.Length);
+                temp.Clear();
+            }
+
+            Watch.Stop();
+            Console.WriteLine($"Elapsed Time: LengthOfLongestSubstring {Watch.ElapsedMilliseconds} ms");
+            Watch.Reset();
+            return hashset.Max(x => x);
+        }
+
+        public static int LengthOfLongestSubstringHashSet(string s)//"abcbbcbb"
+        {
+            Watch.Start();
+            int n = s.Length;
+            int maxLength = 0;
+            HashSet<char> charSet = new HashSet<char>();
+            int left = 0;
+
+            for (int right = 0; right < n; right++)
+            {
+                if (!charSet.Contains(s[right]))
+                {
+                    charSet.Add(s[right]);
+                    maxLength = Math.Max(maxLength, right - left + 1);
+                }
+                else
+                {
+                    while (charSet.Contains(s[right]))
+                    {
+                        charSet.Remove(s[left]);
+                        left++;
+                    }
+                    charSet.Add(s[right]);
+                }
+            }
+            Thread.Sleep(3000);
+            Watch.Stop();
+            Console.WriteLine($"Elapsed Time: LengthOfLongestSubstringHashet {Watch.ElapsedMilliseconds} ms");
+            Watch.Reset();
+            return maxLength;
+        }
+
+
+
         #endregion
     }
 }
