@@ -39,7 +39,7 @@ namespace LeetCodeProject
             return new int[] { };
         }
 
-        public static int[] TwoSumHashSet(int[] nums, int target)//Time : O(n)
+        public static int[] TwoSumHashSet(int[] nums, int target)//Time : O(n) 3 4 7 1 , 7
         {
             Dictionary<int, int> valuePairs = new Dictionary<int, int>();
 
@@ -237,5 +237,79 @@ namespace LeetCodeProject
 
 
         #endregion
+
+        #region StringtoInteger(atoi)
+        public static int MyAtoi(string ss)//4193 with words
+        {
+
+
+            return 0;
+        }
+
+
+        #endregion
+
+
+        #region ReverseInteger
+        public static int ReverseInteger(int n)//-123
+        {
+            //Regex regex = new Regex(@"^-?[1-9]+");
+            //MatchCollection matches = regex.Matches(s);
+            //if (matches.Count > 0)
+            //{
+            //    int.TryParse(matches[0].Value, out int n);
+            //    return n;
+            //}
+
+            if (n == 0)
+                return 0;
+
+            string s = n.ToString();
+            bool isNegative = false;
+
+            if (s[0] == '-')
+            {
+                isNegative = true;
+                s = s.Substring(1);
+            }
+
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            string reversedString = new string(charArray);
+
+            try
+            {
+                int reversed = int.Parse(reversedString);
+
+                if (isNegative)
+                {
+                    reversed *= -1;
+                }
+
+                return reversed;
+            }
+            catch (OverflowException)
+            {
+                return 0;
+            }
+        }
+
+
+        //public int ReverseInteger(int x)// fastest
+        //{
+        //    int ans = 0;
+        //    for (; x != 0; x /= 10)
+        //    {
+        //        if (ans < int.MinValue / 10 || ans > int.MaxValue / 10)
+        //        {
+        //            return 0;
+        //        }
+        //        ans = ans * 10 + x % 10;
+        //    }
+        //    return ans;
+        //}
+
+        #endregion
+
     }
 }
