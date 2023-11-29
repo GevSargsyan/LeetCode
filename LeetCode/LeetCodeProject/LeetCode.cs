@@ -265,7 +265,6 @@ namespace LeetCodeProject
 
         #endregion
 
-
         #region RandomRegexExamp
         static void RandomRegexExamp()
         {
@@ -348,7 +347,6 @@ namespace LeetCodeProject
 
         #endregion
 
-
         #region GetSumAbsoluteDifferences
 
         public static int[] GetSumAbsoluteDifferences(int[] nums)
@@ -376,5 +374,25 @@ namespace LeetCodeProject
 
         #endregion
 
+        #region Numberof1Bits
+
+        public static int HammingWeight(uint n)
+        {
+
+            return Convert.ToString(n, 2).Count(x => x == '1');
+        }
+
+        public static int HammingWeightWithBits(uint n)//010011001
+        {                                       //000000001
+            int count = 0;
+            for (int i = 0; n > 0; i++)
+            {
+                count += (int)(n & 1);
+                n = n >> 1;
+            }
+            return count;
+        }
+
+        #endregion
     }
 }
