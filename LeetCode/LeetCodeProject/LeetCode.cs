@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace LeetCodeProject
 {
@@ -239,9 +240,24 @@ namespace LeetCodeProject
         #endregion
 
         #region StringtoInteger(atoi)
-        public static int MyAtoi(string ss)//4193 with words
+        public static int MyAtoi(string s)//4193 with words
         {
+            Match match = Regex.Match(s, @"^\s*([+-]?\d+)");
+            if (match.Success)
+            {
+                // Extract the matched numeric part
+                string numericString = match.Groups[1].Value;
 
+                if (Int32.TryParse(numericString, out int result))
+                {
+                    return result;
+                }
+                else
+                {
+                    // Parsing failed, return the clamped value based on the sign
+                    return (numericString[0] == '-') ? Int32.MinValue : Int32.MaxValue;
+                }
+            }
 
             return 0;
         }
@@ -249,6 +265,27 @@ namespace LeetCodeProject
 
         #endregion
 
+
+        #region RandomRegexExamp
+        static void RandomRegexExamp()
+        {
+            string input = "123-456";
+            string pattern = @"(\d+)-(\d+)";
+
+            Match match = Regex.Match(input, pattern);
+
+            if (match.Success)
+            {
+                // Access values captured by each group
+                string firstGroup = match.Groups[1].Value;
+                string secondGroup = match.Groups[2].Value;
+
+                Console.WriteLine("First Group: " + firstGroup);
+                Console.WriteLine("Second Group: " + secondGroup);
+            }
+
+        }
+        #endregion
 
         #region ReverseInteger
         public static int ReverseInteger(int n)//-123
@@ -308,6 +345,34 @@ namespace LeetCodeProject
         //    }
         //    return ans;
         //}
+
+        #endregion
+
+
+        #region GetSumAbsoluteDifferences
+
+        public static int[] GetSumAbsoluteDifferences(int[] nums)
+        {
+            int[] returnArr = new int[nums.Length];
+            int leftSum = 0;
+            int totalSum = 0;
+            int rightSum = 0;
+            foreach (var item in nums)
+            {
+                totalSum += item;
+            }
+
+            for (int i = 0, n = 1; i < nums.Length; i++, n = i + 1)
+            {
+                leftSum += nums[i];
+                rightSum = totalSum - leftSum;
+                returnArr[i] = n * nums[i] - leftSum + rightSum - (nums.Length - n) * nums[i];
+
+            }
+            return returnArr;
+        }
+
+
 
         #endregion
 
