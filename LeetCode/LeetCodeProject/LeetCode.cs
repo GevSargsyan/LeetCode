@@ -17,50 +17,6 @@ namespace LeetCodeProject
         }
         #endregion
 
-        #region TwoSum
-        //Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
-        //You may assume that each input would have exactly one solution, and you may not use the same element twice.
-        //You can return the answer in any order.
-
-        public static int[] TwoSum(int[] nums, int target)//Time : O(n^2)
-        {
-            for (int i = 0; i < nums.Length; i++)
-            {
-                for (int j = i; j < nums.Length; j++)
-                {
-                    if (i != j)
-                    {
-                        if (nums[i] + nums[j] == target)
-                        {
-                            return new int[] { i, j };
-                        }
-                    }
-                }
-            }
-            return new int[] { };
-        }
-
-        public static int[] TwoSumHashSet(int[] nums, int target)//Time : O(n) 3 4 7 1 , 7
-        {
-            Dictionary<int, int> valuePairs = new Dictionary<int, int>();
-
-            for (int i = 0; i < nums.Length; i++)
-            {
-                int n = target - nums[i];
-                if (valuePairs.ContainsKey(n))
-                {
-                    return new int[] { valuePairs[n], i };
-                }
-                if (!valuePairs.ContainsKey(nums[i]))
-                {
-                    valuePairs.Add(nums[i], i);
-                }
-            }
-            return new int[] { };
-        }
-
-        #endregion
-
         #region Palindrome
         // Given an integer x, return true if x is a palindrome , and false otherwise.
         public static bool IsPalindromeUsingToString(int x)//111141111
@@ -119,53 +75,6 @@ namespace LeetCodeProject
         }
 
 
-        #endregion
-
-        #region LongestCommonPrefix
-        public static string LongestCommonPrefix(string[] strs)//new string[] { "flower", "flow", "flight" }
-        {
-            if (strs.Length == 0) return "";
-            string prefix = strs[0];
-
-            for (int i = 1; i < strs.Length; i++)
-            {
-                while (strs[i].IndexOf(prefix) != 0)
-                {
-                    prefix = prefix.Substring(0, prefix.Length - 1);
-                    if (string.IsNullOrEmpty(prefix)) return "";
-                }
-            }
-
-            return prefix;
-        }
-
-        public static string LongestCommonPrefixWithSorting(string[] strs)//new string[] { "flower", "flow", "flight" }
-        {
-            if (strs == null || strs.Length == 0)
-                return "";
-
-            Array.Sort(strs);
-
-            string firstStr = strs[0];
-            string lastStr = strs[^1];
-
-            int minLength = Math.Min(firstStr.Length, lastStr.Length);
-            int commonLength = 0;
-
-            for (int i = 0; i < minLength; i++)
-            {
-                if (firstStr[i] == lastStr[i])
-                {
-                    commonLength++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return firstStr[..commonLength];
-        }
         #endregion
 
         #region LongestSubstringWithoutRepeatingCharacters
